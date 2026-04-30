@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AS MICRO & PATH LABS
 
-## Getting Started
+A modern, professional, fully responsive lead collection website for a pathology and diagnostic lab built with Next.js (App Router), Tailwind CSS, and MongoDB.
 
-First, run the development server:
+## Features
+- Fully responsive design using Tailwind CSS
+- Advanced contact form with dynamic appointment booking
+- MongoDB integration for storing appointment requests
+- Nodemailer integration for admin email notifications
+- Interactive sections (Hero, Services, Facilities, Testimonials, About)
+- Floating WhatsApp chat button
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Setup Instructions
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the repository** (if applicable) and navigate to the project directory:
+   ```bash
+   cd project_2
+   ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. **Configure Environment Variables**:
+   Create a `.env.local` file in the root directory (one is provided with placeholders). You need to update it with your real credentials:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   ADMIN_EMAIL=admin@asmicropathlabs.com
+   SMTP_HOST=smtp.gmail.com
+   SMTP_PORT=587
+   SMTP_USER=your_email@gmail.com
+   SMTP_PASS=your_app_password
+   NEXT_PUBLIC_WHATSAPP_NUMBER=919602753579
+   ```
 
-## Learn More
+4. **Run Locally**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment Notes
+- This project is configured to run out-of-the-box on Vercel. 
+- Make sure you add all the environment variables in the Vercel dashboard (`Settings` -> `Environment Variables`) before deploying.
+- Ensure your MongoDB instance allows connections from your deployment IP (0.0.0.0/0 for Vercel).
