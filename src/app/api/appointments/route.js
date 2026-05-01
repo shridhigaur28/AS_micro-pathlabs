@@ -1,4 +1,5 @@
 import connectDB from "@/lib/db";
+import { getIO } from "@/lib/socket";
 import Appointment from "@/models/Appointment";
 
 // =======================
@@ -33,31 +34,51 @@ export async function POST(req) {
 
     await connectDB();
 
-    // 🔥 IMPORTANT MAPPING (DO NOT REMOVE)
+    // ✅ CLEAN + SAFE MAPPING
     const appointmentData = {
       name: body.name,
-      mobile: body.phone, // mapped
-      email: body.email,
+      mobile: body.phone,
+      email: body.email || "",
       city: body.city,
       bookingType: body.bookingType,
-      testRequired: body.test, // mapped
-      preferredDate: body.date, // mapped
-      preferredTimeSlot: body.time, // mapped
+      testRequired: body.test,
+
+      // 🔥 IMPORTANT FIX (date must be Date object)
+      preferredDate: body.date ? new Date(body.date) : null,
+
+      preferredTimeSlot: body.time,
       collectionType: body.collectionType,
-      message: body.message,
+      message: body.message || "",
+      status: "pending",
     };
 
+    // ✅ SAVE
     const appointment = await Appointment.create(appointmentData);
 
+    // 🔥 REAL-TIME EMIT (SAFE)
+    try {
+      const { getIO } = await import("@/lib/socket");
+      const io = getIO();
+
+      io.emit("new-booking", appointment);
+    } catch (err) {
+      console.log("Socket not ready (safe skip)");
+    }
+
+    // ✅ RESPONSE
     return Response.json({
       success: true,
       data: appointment,
     });
+
   } catch (error) {
     console.error("POST ERROR:", error);
 
     return Response.json(
-      { success: false, message: error.message },
+      {
+        success: false,
+        message: error.message || "Something went wrong",
+      },
       { status: 500 }
     );
   }
@@ -84,6 +105,44 @@ export async function DELETE(req) {
 
     return Response.json(
       { success: false, message: "Delete failed" },
+      { status: 500 }
+    );
+  }
+  
+}
+
+// =======================
+// ✅ UPDATE STATUS
+// =======================
+export async function PATCH(req) {
+  try {
+    const body = await req.json();
+    const { id, status } = body;
+
+    if (!id || !status) {
+      return Response.json(
+        { success: false, message: "Missing id or status" },
+        { status: 400 }
+      );
+    }
+
+    await connectDB();
+
+    const updated = await Appointment.findByIdAndUpdate(
+      id,
+      { status },
+      { new: true }
+    );
+
+    return Response.json({
+      success: true,
+      data: updated,
+    });
+  } catch (error) {
+    console.error("PATCH ERROR:", error);
+
+    return Response.json(
+      { success: false, message: "Update failed" },
       { status: 500 }
     );
   }
