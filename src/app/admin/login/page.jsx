@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 export default function AdminLogin() {
@@ -57,13 +58,15 @@ export default function AdminLogin() {
         }}
       >
         {/* 🧬 LOGO CENTER */}
-        <image
+        <Image
           src="/logo.png"
           alt="AS Micro Path Lab"
+          width={120}
+          height={120}
           style={{
-            width: "120px",
             marginBottom: "10px",
-            marginLeft: "72px",
+            margin: "0 auto",
+            display: "block",
           }}
         />
 
