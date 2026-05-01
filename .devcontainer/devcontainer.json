@@ -1,6 +1,13 @@
 {
   "name": "Next.js Dev Environment",
-  "image": "mcr.microsoft.com/devcontainers/javascript-node:18",
+
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+
   "postCreateCommand": "npm install -g pnpm && pnpm install",
+
   "forwardPorts": [3000]
 }
