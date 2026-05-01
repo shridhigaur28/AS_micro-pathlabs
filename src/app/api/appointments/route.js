@@ -1,46 +1,90 @@
-import { NextResponse } from 'next/server';
-import connectDB from '@/lib/db';
-import Appointment from '@/models/Appointment';
-import { sendAdminNotification } from '@/lib/mailer';
+import connectDB from "@/lib/db";
+import Appointment from "@/models/Appointment";
 
+// =======================
+// ✅ GET ALL APPOINTMENTS
+// =======================
+export async function GET() {
+  try {
+    await connectDB();
+
+    const appointments = await Appointment.find().sort({ createdAt: -1 });
+
+    return Response.json({
+      success: true,
+      data: appointments,
+    });
+  } catch (error) {
+    console.error("GET ERROR:", error);
+
+    return Response.json(
+      { success: false, message: "Failed to fetch data" },
+      { status: 500 }
+    );
+  }
+}
+
+// =======================
+// ✅ CREATE APPOINTMENT
+// =======================
 export async function POST(req) {
   try {
     const body = await req.json();
-    const {
-      name, mobile, email, city, testRequired, bookingType,
-      preferredDate, preferredTimeSlot, collectionType, message
-    } = body;
-
-    // Validation
-    if (!name || !mobile || !city || !testRequired || !bookingType || !preferredDate || !preferredTimeSlot || !collectionType) {
-      return NextResponse.json({ success: false, message: 'Missing required fields' }, { status: 400 });
-    }
-
-    if (mobile.length !== 10 || !/^\d{10}$/.test(mobile)) {
-      return NextResponse.json({ success: false, message: 'Invalid mobile number' }, { status: 400 });
-    }
 
     await connectDB();
 
-    const newAppointment = await Appointment.create({
-      name,
-      mobile,
-      email,
-      city,
-      testRequired,
-      bookingType,
-      preferredDate,
-      preferredTimeSlot,
-      collectionType,
-      message,
+    // 🔥 IMPORTANT MAPPING (DO NOT REMOVE)
+    const appointmentData = {
+      name: body.name,
+      mobile: body.phone, // mapped
+      email: body.email,
+      city: body.city,
+      bookingType: body.bookingType,
+      testRequired: body.test, // mapped
+      preferredDate: body.date, // mapped
+      preferredTimeSlot: body.time, // mapped
+      collectionType: body.collectionType,
+      message: body.message,
+    };
+
+    const appointment = await Appointment.create(appointmentData);
+
+    return Response.json({
+      success: true,
+      data: appointment,
     });
-
-    // Send Admin Notification
-    await sendAdminNotification(newAppointment);
-
-    return NextResponse.json({ success: true, message: 'Appointment request received successfully.' }, { status: 201 });
   } catch (error) {
-    console.error('API /appointments Error:', error);
-    return NextResponse.json({ success: false, message: 'Something went wrong. Please try again later.' }, { status: 500 });
+    console.error("POST ERROR:", error);
+
+    return Response.json(
+      { success: false, message: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+// =======================
+// ✅ DELETE APPOINTMENT
+// =======================
+export async function DELETE(req) {
+  try {
+    const body = await req.json();
+    const { id } = body;
+
+    await connectDB();
+
+    await Appointment.findByIdAndDelete(id);
+
+    return Response.json({
+      success: true,
+      message: "Deleted successfully",
+    });
+  } catch (error) {
+    console.error("DELETE ERROR:", error);
+
+    return Response.json(
+      { success: false, message: "Delete failed" },
+      { status: 500 }
+    );
   }
 }
