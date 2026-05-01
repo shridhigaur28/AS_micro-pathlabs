@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export default function AdminPage() {
   const router = useRouter();
@@ -39,22 +40,15 @@ export default function AdminPage() {
       return [];
     }
   }, []);
- 
+
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem("isAdmin");
+    const interval = setInterval(() => {
+      loadData(true);
+    }, 5000);
 
-    if (!isAdmin) {
-      router.replace("/admin/login");
-      return;
-    }
-
-    const init = async () => {
-      await loadData(false);
-    };
-
-    init();
-  }, [router]);
+    return () => clearInterval(interval);
+  }, [loadData]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -150,7 +144,7 @@ export default function AdminPage() {
     <div
       style={{
         minHeight: "100vh",
-        backgroundImage: "url('/bg.jpg')",
+        backgroundImage: "url('/bg.jpeg')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -175,10 +169,12 @@ export default function AdminPage() {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <image
+            <Image
               src="/logo.png"
               alt="AS Micro Path Lab"
-              style={{ width: "54px", height: "54px", objectFit: "contain" }}
+              width={54}
+              height={54}
+              style={{ objectFit: "contain" }}
             />
             <div>
               <h1
