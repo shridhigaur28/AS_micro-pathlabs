@@ -92,7 +92,7 @@ export default function Footer() {
         
         {/* Copyright Strip */}
         <div className="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
-          <p>© 2025 AS MICRO & PATH LABS. All Rights Reserved. | Designed with ❤️ for better healthcare</p>
+          <p>© 2025 AS MICRO & PATH LABS. All Rights Reserved.</p>
         </div>
       </div>
     </footer>
