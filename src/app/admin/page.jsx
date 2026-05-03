@@ -43,14 +43,7 @@ export default function AdminPage() {
 
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      loadData(true);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [loadData]);
-
-  useEffect(() => {
+    loadData(false); // Load immediately on mount
     const interval = setInterval(() => {
       loadData(true);
     }, 5000);

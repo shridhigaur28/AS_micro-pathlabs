@@ -26,6 +26,7 @@ export const sendAdminNotification = async (appointment) => {
       <tr><td><strong>Email</strong></td><td>${appointment.email || 'N/A'}</td></tr>
       <tr><td><strong>City / Area</strong></td><td>${appointment.city}</td></tr>
       <tr><td><strong>Booking Type</strong></td><td>${appointment.bookingType === 'package' ? 'Health Package' : 'Individual Test'}</td></tr>
+      ${appointment.testCategory ? `<tr><td><strong>Health Condition</strong></td><td>${appointment.testCategory}</td></tr>` : ''}
       <tr><td><strong>Test Required</strong></td><td>${appointment.testRequired}</td></tr>
       <tr><td><strong>Preferred Date</strong></td><td>${new Date(appointment.preferredDate).toLocaleDateString()}</td></tr>
       <tr><td><strong>Preferred Time Slot</strong></td><td>${appointment.preferredTimeSlot}</td></tr>

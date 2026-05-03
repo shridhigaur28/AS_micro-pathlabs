@@ -2,6 +2,153 @@
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
+const testCategories = [
+  {
+    category: "Heart",
+    emoji: "❤️",
+    tests: [
+      "Lipid Profile (5 Tests)",
+      "Complete Blood Count (CBC)",
+      "HbA1c",
+      "Fasting Blood Sugar",
+      "SGOT / AST",
+      "CRP (C-Reactive Protein)",
+      "Homocysteine",
+      "Troponin I",
+      "Uric Acid",
+      "ESR (Erythrocyte Sedimentation Rate)"
+    ]
+  },
+  {
+    category: "Kidney",
+    emoji: "🫘",
+    tests: [
+      "Kidney Function Test (KFT - 10 Tests)",
+      "Urine Routine & Microscopy",
+      "Complete Blood Count (CBC)",
+      "Fasting Blood Sugar",
+      "Uric Acid",
+      "Electrolytes (Na, K, Cl)",
+      "Calcium",
+      "Phosphorus",
+      "Albumin",
+      "HbA1c"
+    ]
+  },
+  {
+    category: "Liver",
+    emoji: "🟤",
+    tests: [
+      "Liver Function Test (LFT - 8 Tests)",
+      "Hepatitis B Surface Antigen (HBsAg)",
+      "Hepatitis C Antibody (Anti-HCV)",
+      "Complete Blood Count (CBC)",
+      "Gamma-GT (GGT)",
+      "Prothrombin Time (PT/INR)",
+      "Albumin",
+      "Fasting Blood Sugar",
+      "Uric Acid",
+      "Alkaline Phosphatase (ALP)"
+    ]
+  },
+  {
+    category: "Thyroid",
+    emoji: "🦋",
+    tests: [
+      "Thyroid Profile (T3, T4, TSH)",
+      "Free T3 (FT3)",
+      "Free T4 (FT4)",
+      "Anti-TPO Antibody",
+      "Anti-Thyroglobulin Antibody",
+      "Vitamin B12",
+      "Vitamin D 25-Hydroxy",
+      "Complete Blood Count (CBC)",
+      "Fasting Blood Sugar",
+      "Lipid Profile (5 Tests)"
+    ]
+  },
+  {
+    category: "Intestines",
+    emoji: "🌀",
+    tests: [
+      "Stool Routine & Microscopy",
+      "Stool Culture & Sensitivity",
+      "H. Pylori Antigen (Stool)",
+      "Complete Blood Count (CBC)",
+      "Liver Function Test (LFT)",
+      "Albumin",
+      "Calcium",
+      "Vitamin B12",
+      "Fasting Blood Sugar",
+      "Urine Routine & Microscopy"
+    ]
+  },
+  {
+    category: "Joints",
+    emoji: "🦴",
+    tests: [
+      "Uric Acid",
+      "RA Factor (Rheumatoid Arthritis Factor)",
+      "CRP (C-Reactive Protein)",
+      "ESR (Erythrocyte Sedimentation Rate)",
+      "Anti-CCP Antibody",
+      "Vitamin D 25-Hydroxy",
+      "Calcium",
+      "Complete Blood Count (CBC)",
+      "ANA (Antinuclear Antibody)",
+      "Kidney Function Test (KFT)"
+    ]
+  },
+  {
+    category: "Fever",
+    emoji: "🌡️",
+    tests: [
+      "Complete Blood Count (CBC)",
+      "Malaria Antigen Test",
+      "Dengue NS1 Antigen",
+      "Widal Test",
+      "CRP (C-Reactive Protein)",
+      "ESR (Erythrocyte Sedimentation Rate)",
+      "Urine Routine & Microscopy",
+      "Leptospira IgM",
+      "Chikungunya IgM",
+      "Blood Culture & Sensitivity"
+    ]
+  },
+  {
+    category: "Diabetes",
+    emoji: "🩸",
+    tests: [
+      "Fasting Blood Sugar",
+      "Post Prandial Blood Sugar (PPBS)",
+      "HbA1c",
+      "Kidney Function Test (KFT)",
+      "Lipid Profile (5 Tests)",
+      "Urine Microalbumin",
+      "Complete Blood Count (CBC)",
+      "Liver Function Test (LFT)",
+      "Thyroid Profile (TSH)",
+      "Vitamin D 25-Hydroxy"
+    ]
+  },
+  {
+    category: "Infection",
+    emoji: "🦠",
+    tests: [
+      "Complete Blood Count (CBC)",
+      "CRP (C-Reactive Protein)",
+      "ESR (Erythrocyte Sedimentation Rate)",
+      "Blood Culture & Sensitivity",
+      "Urine Culture & Sensitivity",
+      "Widal Test",
+      "Dengue NS1 Antigen",
+      "Malaria Antigen Test",
+      "HBsAg (Hepatitis B Antigen)",
+      "HIV Screening (ELISA)"
+    ]
+  }
+];
+
 export default function AppointmentForm() {
   const {
     register,
@@ -14,6 +161,9 @@ export default function AppointmentForm() {
   const [submitStatus, setSubmitStatus] = useState(null);
   const [bookingType, setBookingType] = useState(null);
   const [bookingTypeError, setBookingTypeError] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedTest, setSelectedTest] = useState("");
+  const [categoryError, setCategoryError] = useState(false);
 
   useEffect(() => {
     const handlePreselect = (e) => {
@@ -22,6 +172,12 @@ export default function AppointmentForm() {
         setBookingType('package');
       } else {
         setBookingType('individual');
+        const foundCategory = testCategories.find(c => c.tests.includes(val));
+        if (foundCategory) {
+          setSelectedCategory(foundCategory.category);
+          setCategoryError(false);
+        }
+        setSelectedTest(val);
       }
       setValue('testRequired', val);
       setBookingTypeError(false);
@@ -35,11 +191,19 @@ export default function AppointmentForm() {
     setBookingType(type);
     setBookingTypeError(false);
     setValue('testRequired', '');
+    setSelectedCategory(null);
+    setSelectedTest('');
+    setCategoryError(false);
   };
 
   const onSubmit = async (data) => {
     if (!bookingType) {
       setBookingTypeError(true);
+      return;
+    }
+    
+    if (bookingType === 'individual' && !selectedCategory) {
+      setCategoryError(true);
       return;
     }
 
@@ -51,7 +215,8 @@ export default function AppointmentForm() {
         phone: data.mobile,
         email: data.email || '',
         city: data.city,
-        test: data.testRequired,
+        test: bookingType === 'individual' ? selectedTest : data.testRequired,
+        testCategory: bookingType === 'individual' ? selectedCategory : null,
         date: data.preferredDate,
         time: data.preferredTimeSlot,
         collectionType: data.collectionType,
@@ -255,48 +420,105 @@ export default function AppointmentForm() {
                 </div>
               </div>
 
+              {bookingType === 'individual' && (
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Select Health Condition *
+                  </label>
+                  <p className="text-sm text-gray-500 mb-4">
+                    Choose the health condition you want to get tested for
+                  </p>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {testCategories.map((cat) => (
+                      <button
+                        key={cat.category}
+                        type="button"
+                        onClick={() => {
+                          setSelectedCategory(cat.category);
+                          setSelectedTest('');
+                          setValue('testRequired', '');
+                          setCategoryError(false);
+                        }}
+                        className={`border-2 rounded-lg py-3 px-4 transition-all duration-200 text-left flex items-center ${
+                          selectedCategory === cat.category
+                            ? 'border-[#2d9e8f] bg-[#f0fafa] text-[#2d9e8f] font-bold'
+                            : 'border-gray-200 bg-white text-[#1a1a2e] font-medium hover:border-gray-300'
+                        }`}
+                      >
+                        <span className="mr-2 text-lg">{cat.emoji}</span>
+                        {cat.category}
+                      </button>
+                    ))}
+                  </div>
+                  {categoryError && (
+                    <p className="mt-2 text-sm text-red-600">Please select a health condition</p>
+                  )}
+                </div>
+              )}
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     {getDropdownLabel()}
                   </label>
-                  <select
-                    {...register('testRequired', { required: 'Please select a test/package' })}
-                    disabled={!bookingType}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors bg-white disabled:bg-gray-100 disabled:text-gray-400"
-                  >
-                    {!bookingType && <option value="">First select booking type above</option>}
+                  
+                  {bookingType === 'individual' && selectedCategory && (
+                    <div className="text-sm text-gray-500 mb-2 flex items-center justify-between">
+                      <span>
+                        Showing tests for {testCategories.find((c) => c.category === selectedCategory)?.emoji} {selectedCategory}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCategory(null);
+                          setSelectedTest('');
+                          setValue('testRequired', '');
+                        }}
+                        className="text-blue-600 hover:text-blue-800 underline"
+                      >
+                        Change
+                      </button>
+                    </div>
+                  )}
 
-                    {bookingType === 'package' && (
-                      <>
-                        <option value="">Select a package...</option>
-                        <option value="Silver Package">Silver Package</option>
-                        <option value="Gold Package">Gold Package</option>
-                        <option value="Platinum Package">Platinum Package</option>
-                        <option value="Diamond Package">Diamond Package</option>
-                      </>
-                    )}
+                  <div className={`transition-opacity duration-300 ${bookingType === 'individual' && !selectedCategory ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
+                    <select
+                      {...register('testRequired', { required: 'Please select a test/package' })}
+                      disabled={!bookingType || (bookingType === 'individual' && !selectedCategory)}
+                      value={bookingType === 'individual' ? selectedTest : undefined}
+                      onChange={(e) => {
+                        setValue('testRequired', e.target.value);
+                        if (bookingType === 'individual') setSelectedTest(e.target.value);
+                      }}
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-colors bg-white disabled:bg-gray-100 disabled:text-gray-400"
+                    >
+                      {!bookingType && <option value="">First select booking type above</option>}
 
-                    {bookingType === 'individual' && (
-                      <>
-                        <option value="">Select a test...</option>
-                        <option value="Fasting Blood Sugar">Fasting Blood Sugar</option>
-                        <option value="Lipid Profile (5 Tests)">Lipid Profile (5 Tests)</option>
-                        <option value="Thyroid Profile (3 Tests)">Thyroid Profile (3 Tests)</option>
-                        <option value="Kidney Function (10 Tests)">Kidney Function (10 Tests)</option>
-                        <option value="Liver Function (8 Tests)">Liver Function (8 Tests)</option>
-                        <option value="Complete Blood Count (19 Tests)">
-                          Complete Blood Count (19 Tests)
-                        </option>
-                        <option value="HbA1c (1 Test)">HbA1c (1 Test)</option>
-                        <option value="Vitamin B12 (1 Test)">Vitamin B12 (1 Test)</option>
-                        <option value="Vitamin D 25-Hydroxy (1 Test)">
-                          Vitamin D 25-Hydroxy (1 Test)
-                        </option>
-                        <option value="Other">Other</option>
-                      </>
-                    )}
-                  </select>
+                      {bookingType === 'package' && (
+                        <>
+                          <option value="">Select a package...</option>
+                          <option value="Silver Package">Silver Package</option>
+                          <option value="Gold Package">Gold Package</option>
+                          <option value="Platinum Package">Platinum Package</option>
+                          <option value="Diamond Package">Diamond Package</option>
+                        </>
+                      )}
+
+                      {bookingType === 'individual' && (
+                        <>
+                          <option value="">Select a test from {selectedCategory || 'category'}...</option>
+                          {selectedCategory &&
+                            testCategories
+                              .find((c) => c.category === selectedCategory)
+                              ?.tests.map((testName) => (
+                                <option key={testName} value={testName}>
+                                  {testName}
+                                </option>
+                              ))}
+                        </>
+                      )}
+                    </select>
+                  </div>
                   {errors.testRequired && (
                     <p className="mt-1 text-sm text-red-600">{errors.testRequired.message}</p>
                   )}

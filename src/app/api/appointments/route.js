@@ -1,6 +1,7 @@
 import connectDB from "@/lib/db";
 import { getIO } from "@/lib/socket";
 import Appointment from "@/models/Appointment";
+import { sendAdminNotification } from "@/lib/mailer";
 
 // =======================
 // ✅ GET ALL APPOINTMENTS
@@ -41,6 +42,7 @@ export async function POST(req) {
       email: body.email || "",
       city: body.city,
       bookingType: body.bookingType,
+      testCategory: body.testCategory,
       testRequired: body.test,
 
       // 🔥 IMPORTANT FIX (date must be Date object)
@@ -64,6 +66,9 @@ export async function POST(req) {
     } catch (err) {
       console.log("Socket not ready (safe skip)");
     }
+
+    // 🔥 SEND EMAIL NOTIFICATION
+    await sendAdminNotification(appointment);
 
     // ✅ RESPONSE
     return Response.json({

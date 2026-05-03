@@ -6,6 +6,7 @@ const AppointmentSchema = new mongoose.Schema({
   email: { type: String, required: false },
   city: { type: String, required: true },
   bookingType: { type: String, enum: ['package', 'individual'], required: true },
+  testCategory: { type: String, required: false },
   testRequired: { type: String, required: true },
   preferredDate: { type: Date, required: true },
   preferredTimeSlot: { type: String, required: true },
