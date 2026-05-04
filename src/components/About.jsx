@@ -2,50 +2,14 @@
 import { Poppins } from 'next/font/google';
 import { CheckCircle2, MapPin, Phone, MessageCircle, Globe, Clock, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-
+import Link from 'next/link';
+import { blogs } from '@/lib/blogs';
 const poppins = Poppins({
   weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
 });
 
-const blogs = [
-  {
-    id: 1,
-    title: "Why Regular Blood Sugar Testing is Important for Everyone",
-    excerpt: "Many people don't realize they have high blood sugar until serious complications arise. Regular fasting blood sugar tests can help detect diabetes and prediabetes early, giving you time to make lifestyle changes before it's too late.",
-    category: "Diabetes",
-    categoryBg: "bg-red-100",
-    categoryText: "text-[#b91c1c]",
-    author: "Dr. Sunil Kumawat",
-    date: "March 15, 2025",
-    readTime: "3 min read",
-    thumbnail: "https://images.unsplash.com/photo-1579165466741-7f35e4755660?w=400&h=250&fit=crop"
-  },
-  {
-    id: 2,
-    title: "5 Signs You Should Get Your Thyroid Tested Today",
-    excerpt: "Fatigue, weight gain, hair loss, and mood swings — these could all be signs of an underactive thyroid. A simple thyroid profile test (T3, T4, TSH) can give you clear answers in just 24 hours.",
-    category: "Thyroid",
-    categoryBg: "bg-teal-100",
-    categoryText: "text-[#2d9e8f]",
-    author: "Dr. Sunil Kumawat",
-    date: "February 28, 2025",
-    readTime: "4 min read",
-    thumbnail: "https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?w=400&h=250&fit=crop"
-  },
-  {
-    id: 3,
-    title: "Vitamin D & B12 Deficiency — The Silent Epidemic in India",
-    excerpt: "Studies show that over 70% of Indians are deficient in Vitamin D and B12 without even knowing it. These deficiencies can cause fatigue, bone pain, and nerve damage. Find out how a simple test can change your health.",
-    category: "Vitamin Deficiency",
-    categoryBg: "bg-blue-100",
-    categoryText: "text-[#1a1a2e]",
-    author: "Dr. Sunil Kumawat",
-    date: "January 10, 2025",
-    readTime: "5 min read",
-    thumbnail: "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=400&h=250&fit=crop"
-  }
-];
+
 
 export default function About() {
   return (
@@ -146,9 +110,12 @@ export default function About() {
                   <span>·</span>
                   <span>{blog.readTime}</span>
                 </div>
-                <a href="#" className="mt-4 inline-flex items-center text-[#b91c1c] font-bold hover:text-red-800 transition-colors">
-                  Read More <ArrowRight className="ml-1 w-4 h-4" />
-                </a>
+                <Link
+                  href={`/blog/${blog.slug}`}
+                  className="text-[#b91c1c] font-semibold hover:underline inline-flex items-center gap-1 text-sm transition-all duration-200 mt-4"
+                >
+                  Read More →
+                </Link>
               </div>
             </div>
           ))}
