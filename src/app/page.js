@@ -3,6 +3,7 @@ import Hero from '@/components/Hero';
 import Packages from '@/components/Packages';
 import Tests from '@/components/Tests';
 import AppointmentForm from '@/components/AppointmentForm';
+import Franchise from '@/components/Franchise';
 import About from '@/components/About';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import Footer from '@/components/Footer';
@@ -15,6 +16,7 @@ export default function Home() {
       <Packages />
       <Tests />
       <AppointmentForm />
+      <Franchise />
       <About />
       <WhatsAppButton />
       <Footer />

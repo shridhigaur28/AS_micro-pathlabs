@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 export default function Hero() {
   return (
     <section id="hero" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
@@ -51,7 +51,7 @@ export default function Hero() {
             <div className="text-sm text-gray-500 font-medium">Tests Available</div>
           </div>
           <div>
-            <div className="text-3xl md:text-4xl font-bold text-teal-500 mb-2">99%</div>
+            <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">99%</div>
             <div className="text-sm text-gray-500 font-medium">Accurate Reports</div>
           </div>
         </div>
