@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { Poppins } from 'next/font/google';
 import { CheckCircle2, MapPin, Phone, MessageCircle, Globe, Clock, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
@@ -104,8 +104,6 @@ export default function About() {
                   {blog.excerpt}
                 </p>
                 <div className="mt-auto pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 font-medium">
-                  <span>{blog.author}</span>
-                  <span>·</span>
                   <span>{blog.date}</span>
                   <span>·</span>
                   <span>{blog.readTime}</span>
@@ -151,8 +149,8 @@ export default function About() {
                 <Phone className="w-6 h-6 text-[#2d9e8f] mr-4 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="font-bold text-[#1a1a2e] text-lg mb-1">Phone</h4>
-                  <a href="tel:+919602753579" className="text-gray-600 hover:text-[#b91c1c] transition-colors">
-                    +91 96027 53579
+                  <a href="tel:+919910908530" className="text-gray-600 hover:text-[#b91c1c] transition-colors">
+                    +91 99109 08530
                   </a>
                 </div>
               </li>
@@ -161,8 +159,8 @@ export default function About() {
                 <MessageCircle className="w-6 h-6 text-[#2d9e8f] mr-4 flex-shrink-0 mt-1" />
                 <div>
                   <h4 className="font-bold text-[#1a1a2e] text-lg mb-1">WhatsApp</h4>
-                  <a href="https://wa.me/919602753579" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#25d366] transition-colors">
-                    +91 96027 53579
+                  <a href="https://wa.me/919910908530" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#25d366] transition-colors">
+                    +91 99109 08530
                   </a>
                 </div>
               </li>
@@ -183,13 +181,13 @@ export default function About() {
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <a 
-                href="tel:+919602753579"
+                href="tel:+919910908530"
                 className="bg-[#b91c1c] text-white font-bold px-8 py-3 rounded-md hover:bg-red-800 transition-colors text-center shadow-md flex items-center justify-center"
               >
                 📞 Call Now
               </a>
               <a 
-                href="https://wa.me/919602753579"
+                href="https://wa.me/919910908530"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-[#25d366] text-white font-bold px-8 py-3 rounded-md hover:bg-green-600 transition-colors text-center shadow-md flex items-center justify-center"

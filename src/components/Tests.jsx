@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { useState, useRef } from 'react';
 import { Search } from 'lucide-react';
 import { Poppins } from 'next/font/google';
@@ -132,7 +132,7 @@ export default function Tests() {
               ) : (
                 <div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-200">
                   <p className="text-lg text-gray-600 font-medium">
-                    No results found. Call <a href="tel:+919602753579" className="text-[#b91c1c] font-bold hover:underline">+91 96027 53579</a> for help.
+                    No results found. Call <a href="tel:+919910908530" className="text-[#b91c1c] font-bold hover:underline">+91 99109 08530</a> for help.
                   </p>
                 </div>
               )}
@@ -178,7 +178,7 @@ export default function Tests() {
               ) : (
                 <div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-200">
                   <p className="text-lg text-gray-600 font-medium">
-                    No results found. Call <a href="tel:+919602753579" className="text-[#b91c1c] font-bold hover:underline">+91 96027 53579</a> for help.
+                    No results found. Call <a href="tel:+919910908530" className="text-[#b91c1c] font-bold hover:underline">+91 99109 08530</a> for help.
                   </p>
                 </div>
               )}
@@ -193,10 +193,10 @@ export default function Tests() {
             Call or WhatsApp us and we'll help you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <a href="tel:+919602753579" className="bg-white text-[#b91c1c] font-bold px-6 py-3 rounded-md hover:bg-gray-100 transition-colors text-center whitespace-nowrap shadow-sm">
+            <a href="tel:+919910908530" className="bg-white text-[#b91c1c] font-bold px-6 py-3 rounded-md hover:bg-gray-100 transition-colors text-center whitespace-nowrap shadow-sm">
               📞 Call Now
             </a>
-            <a href="https://wa.me/919602753579" target="_blank" rel="noopener noreferrer" className="bg-white text-[#b91c1c] font-bold px-6 py-3 rounded-md hover:bg-gray-100 transition-colors text-center whitespace-nowrap shadow-sm">
+            <a href="https://wa.me/919910908530" target="_blank" rel="noopener noreferrer" className="bg-white text-[#b91c1c] font-bold px-6 py-3 rounded-md hover:bg-gray-100 transition-colors text-center whitespace-nowrap shadow-sm">
               💬 WhatsApp
             </a>
           </div>

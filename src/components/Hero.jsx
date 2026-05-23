@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 export default function Hero() {
   return (
     <section id="hero" className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
@@ -27,10 +27,10 @@ export default function Hero() {
               Book Appointment
             </button>
             <a 
-              href="tel:+919602753579"
+              href="tel:+919910908530"
               className="w-full sm:w-auto bg-teal-500 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-teal-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center"
             >
-              Call Now: +91 96027 53579
+              Call Now: +91 99109 08530
             </a>
           </div>
         </div>

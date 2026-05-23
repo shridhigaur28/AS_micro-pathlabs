@@ -75,10 +75,8 @@ export default async function BlogDetail({ params }) {
             {blog.title}
           </h1>
 
-          {/* Author + Date + Read Time */}
+          {/* Date + Read Time */}
           <div className="flex items-center gap-2 text-sm text-gray-500 mb-8 border-b border-gray-200 pb-6">
-            <span>{blog.author}</span>
-            <span>·</span>
             <span>{blog.date}</span>
             <span>·</span>
             <span>{blog.readTime}</span>

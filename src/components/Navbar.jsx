@@ -66,9 +66,9 @@ export default function Navbar() {
               <Image 
                 src="/logo.png" 
                 alt="AS Micro & Path Labs Logo" 
-                width={40} 
+                width={53} 
                 height={40} 
-                className="mr-3"
+                className="mr-3 object-contain"
               />
               <div className={`${poppins.className} text-xl md:text-2xl font-bold tracking-tight`}>
                 <span className="text-[#b91c1c]">AS MICRO</span>
