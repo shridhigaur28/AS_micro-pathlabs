@@ -32,6 +32,8 @@ export default function Navbar() {
     { name: 'Contact', href: '#contact' },
   ];
 
+  const desktopNavLinks = navLinks.filter((link) => link.name !== 'Franchise');
+
   const handleScrollToSection = (e, href, name) => {
     e.preventDefault();
     setIsOpen(false);
@@ -80,7 +82,7 @@ export default function Navbar() {
           
           {/* CENTER: Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
+            {desktopNavLinks.map((link) => (
               <a 
                 key={link.name} 
                 href={link.href}
@@ -92,8 +94,14 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* RIGHT: CTA Button */}
-          <div className="hidden md:flex items-center">
+          {/* RIGHT: CTA Buttons */}
+          <div className="hidden md:flex items-center gap-3">
+            <button 
+              onClick={(e) => handleScrollToSection(e, '#franchise', 'Franchise')}
+              className="bg-[#b91c1c] text-white px-[20px] py-[10px] rounded-[6px] font-semibold hover:bg-[#991b1b] hover:scale-[1.03] transition-all duration-200 ease-in-out"
+            >
+              Franchise
+            </button>
             <button 
               onClick={handleBookAppointment}
               className="bg-[#b91c1c] text-white px-[20px] py-[10px] rounded-[6px] font-semibold hover:bg-[#991b1b] hover:scale-[1.03] transition-all duration-200 ease-in-out"

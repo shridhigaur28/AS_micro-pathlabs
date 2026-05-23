@@ -39,11 +39,11 @@ export default function Hero() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
         <div className="bg-white rounded-2xl shadow-xl p-8 grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-x divide-gray-100">
           <div>
-            <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">15+</div>
+            <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">10+</div>
             <div className="text-sm text-gray-500 font-medium">Years Experience</div>
           </div>
           <div>
-            <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">50k+</div>
+            <div className="text-3xl md:text-4xl font-bold text-blue-600 mb-2">10k+</div>
             <div className="text-sm text-gray-500 font-medium">Happy Patients</div>
           </div>
           <div>
